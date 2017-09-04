@@ -1,57 +1,58 @@
-var _evancz$elm_markdown$Native_Markdown = function() {
+/*
+
+import Elm.Kernel.VirtualDom exposing (custom, doc)
+
+*/
+
 
 
 // VIRTUAL-DOM WIDGETS
 
-function toHtml(options, factList, rawMarkdown)
+
+var _Markdown_toHtml = F3(function(options, factList, rawMarkdown)
 {
-	var model = {
-		options: options,
-		markdown: rawMarkdown
-	};
-	return _elm_lang$virtual_dom$Native_VirtualDom.custom(factList, model, implementation);
-}
+	return _VirtualDom_custom(
+		factList,
+		{
+			__options: options,
+			__markdown: rawMarkdown
+		},
+		_Markdown_render,
+		_Markdown_diff
+	);
+});
+
 
 
 // WIDGET IMPLEMENTATION
 
-var implementation = {
-	render: render,
-	diff: diff
-};
 
-function render(model)
+function _Markdown_render(model)
 {
-	var html = marked(model.markdown, formatOptions(model.options));
-	var div = document.createElement('div');
-	div.innerHTML = html;
+	return A2(_Markdown_replace, model, _VirtualDom_doc.createElement('div'));
+}
+
+
+function _Markdown_diff(x, y)
+{
+	return x.__markdown === y.__markdown && x.__options === y.__options
+		? false
+		: _Markdown_replace(y);
+}
+
+
+var _Markdown_replace = F2(function(model, div)
+{
+	div.innerHTML = _Markdown_marked(model.__markdown, _Markdown_formatOptions(model.__options));
 	return div;
-}
+});
 
-function diff(a, b)
-{
-	
-	if (a.model.markdown === b.model.markdown && a.model.options === b.model.options)
-	{
-		return null;
-	}
-
-	return {
-		applyPatch: applyPatch,
-		data: marked(b.model.markdown, formatOptions(b.model.options))
-	};
-}
-
-function applyPatch(domNode, data)
-{
-	domNode.innerHTML = data;
-	return domNode;
-}
 
 
 // ACTUAL MARKDOWN PARSER
 
-var marked = function() {
+
+var _Markdown_marked = function() {
 	// catch the `marked` object regardless of the outer environment.
 	// (ex. a CommonJS module compatible environment.)
 	// note that this depends on marked's implementation of environment detection.
@@ -72,13 +73,13 @@ var marked = function() {
 
 // FORMAT OPTIONS FOR MARKED IMPLEMENTATION
 
-function formatOptions(options)
+function _Markdown_formatOptions(options)
 {
 	function toHighlight(code, lang)
 	{
-		if (!lang && options.defaultHighlighting.ctor === 'Just')
+		if (!lang && options.__$defaultHighlighting.$ === 'Just')
 		{
-			lang = options.defaultHighlighting._0;
+			lang = options.__$defaultHighlighting.a;
 		}
 
 		if (typeof hljs !== 'undefined' && lang && hljs.listLanguages().indexOf(lang) >= 0)
@@ -89,16 +90,16 @@ function formatOptions(options)
 		return code;
 	}
 
-	var gfm = options.githubFlavored;
-	if (gfm.ctor === 'Just')
+	var gfm = options.__$githubFlavored;
+	if (gfm.$ === 'Just')
 	{
 		return {
 			highlight: toHighlight,
 			gfm: true,
-			tables: gfm._0.tables,
-			breaks: gfm._0.breaks,
-			sanitize: options.sanitize,
-			smartypants: options.smartypants
+			tables: gfm.a.tables,
+			breaks: gfm.a.breaks,
+			sanitize: options.__$sanitize,
+			smartypants: options.__$smartypants
 		};
 	}
 
@@ -107,16 +108,7 @@ function formatOptions(options)
 		gfm: false,
 		tables: false,
 		breaks: false,
-		sanitize: options.sanitize,
-		smartypants: options.smartypants
+		sanitize: options.__$sanitize,
+		smartypants: options.__$smartypants
 	};
 }
-
-
-// EXPORTS
-
-return {
-	toHtml: F3(toHtml)
-};
-
-}();
