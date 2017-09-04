@@ -13,8 +13,8 @@ module Markdown exposing
 @docs Options, defaultOptions, toHtmlWith
 -}
 
+import Elm.Kernel.Markdown
 import Html exposing (Html, Attribute)
-import Native.Markdown
 
 
 {-| Turn a markdown string into an HTML element, using the `defaultOptions`.
@@ -30,8 +30,8 @@ import Native.Markdown
     """
 -}
 toHtml : List (Attribute msg) -> String -> Html msg
-toHtml attrs string =
-  Native.Markdown.toHtml defaultOptions attrs string
+toHtml =
+  toHtmlWith defaultOptions
 
 
 {-| Some parser options so you can tweak things for your particular case.
@@ -101,4 +101,4 @@ defaultOptions =
 -}
 toHtmlWith : Options -> List (Attribute msg) -> String -> Html msg
 toHtmlWith =
-  Native.Markdown.toHtml
+  Elm.Kernel.Markdown.toHtml
