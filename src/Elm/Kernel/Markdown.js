@@ -1,6 +1,7 @@
 /*
 
 import Elm.Kernel.VirtualDom exposing (custom, doc)
+import Maybe exposing (isJust)
 
 */
 
@@ -77,7 +78,7 @@ function _Markdown_formatOptions(options)
 {
 	function toHighlight(code, lang)
 	{
-		if (!lang && options.__$defaultHighlighting.$ === 'Just')
+		if (!lang && __Maybe_isJust(options.__$defaultHighlighting))
 		{
 			lang = options.__$defaultHighlighting.a;
 		}
@@ -90,24 +91,13 @@ function _Markdown_formatOptions(options)
 		return code;
 	}
 
-	var gfm = options.__$githubFlavored;
-	if (gfm.$ === 'Just')
-	{
-		return {
-			highlight: toHighlight,
-			gfm: true,
-			tables: gfm.a.tables,
-			breaks: gfm.a.breaks,
-			sanitize: options.__$sanitize,
-			smartypants: options.__$smartypants
-		};
-	}
+	var gfm = options.__$githubFlavored.a;
 
 	return {
 		highlight: toHighlight,
-		gfm: false,
-		tables: false,
-		breaks: false,
+		gfm: gfm,
+		tables: gfm && gfm.__$tables,
+		breaks: gfm && gfm.__$breaks,
 		sanitize: options.__$sanitize,
 		smartypants: options.__$smartypants
 	};
