@@ -75,7 +75,7 @@ type alias Options =
 
     { githubFlavored = Just { tables = False, breaks = False }
     , defaultHighlighting = Nothing
-    , sanitize = False
+    , sanitize = True
     , smartypants = False
     }
 -}
@@ -83,21 +83,24 @@ defaultOptions : Options
 defaultOptions =
   { githubFlavored = Just { tables = False, breaks = False }
   , defaultHighlighting = Nothing
-  , sanitize = False
+  , sanitize = True
   , smartypants = False
   }
 
 
-{-| Maybe you want to parse user input into markdown. To stop them from adding
-`<script>` tags, you can use modified parsing options.
+{-| Maybe you want to allow tables in your markdown?
 
-    options : Options
-    options =
-        { defaultOptions | sanitize = True }
+    myOptions : Options
+    myOptions =
+        { githubFlavored = Just { tables = True, breaks = False }
+        , defaultHighlighting = Nothing
+        , sanitize = True
+        , smartypants = False
+        }
 
     toMarkdown : String -> Html
     toMarkdown userInput =
-        Markdown.toHtmlWith options [] userInput
+        Markdown.toHtmlWith myOptions [] userInput
 -}
 toHtmlWith : Options -> List (Attribute msg) -> String -> Html msg
 toHtmlWith =
