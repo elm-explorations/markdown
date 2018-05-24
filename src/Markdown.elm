@@ -61,7 +61,7 @@ toHtml =
 [fenced]: https://help.github.com/articles/github-flavored-markdown/#fenced-code-blocks
 [tables]: https://help.github.com/articles/github-flavored-markdown/#tables
 [highlight]: https://highlightjs.org/
-[dash]: http://en.wikipedia.org/wiki/Dash
+[dash]: https://en.wikipedia.org/wiki/Dash
 -}
 type alias Options =
   { githubFlavored : Maybe { tables : Bool, breaks : Bool }
