@@ -34,5 +34,5 @@ see highlighting of code blocks in the rendering result, you need to
 make sure that your page/app binds a version of that library
 (supporting the languages you want to handle) to `window.hljs` in
 Javascript. [This is how package.elm-lang.org does
-that.](https://github.com/elm-lang/package.elm-lang.org/blob/e0b7aa4282038475612722ff7a57195866f8645b/backend/ServeFile.hs#L54)
+that.](https://github.com/elm/package.elm-lang.org/blob/e0b7aa4282038475612722ff7a57195866f8645b/backend/ServeFile.hs#L54)
 
